@@ -1,0 +1,1 @@
+INSERT INTO article(title, author_id, contents, created) VALUES ('awesome', 'jonghak', 'blah blah', CURRENT_TIME);
