@@ -1,6 +1,8 @@
 package kr.pe.jonghak.example.bbs.controller;
 
 import kr.pe.jonghak.example.bbs.model.Article;
+import kr.pe.jonghak.example.bbs.model.ArticleModel;
+import kr.pe.jonghak.example.bbs.model.ArticleModelAssembler;
 import kr.pe.jonghak.example.bbs.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +22,7 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public Article getArticle(@PathVariable("id") Long id) {
-        return articleRepository.findById(id).get();
+    public ArticleModel getArticle(@PathVariable("id") Long id) {
+        return new ArticleModelAssembler().toModel(articleRepository.findById(id).get());
     }
 }
