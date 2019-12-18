@@ -1,5 +1,6 @@
 package kr.pe.jonghak.example.bbs.controller;
 
+import kr.pe.jonghak.example.bbs.client.AuthorClient;
 import kr.pe.jonghak.example.bbs.model.Article;
 import kr.pe.jonghak.example.bbs.model.ArticleModel;
 import kr.pe.jonghak.example.bbs.model.ArticleModelAssembler;
@@ -20,13 +21,16 @@ public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private AuthorClient authorClient;
+
     @GetMapping
     public PagedModel<ArticleModel> getArticles(Pageable pageable, PagedResourcesAssembler<Article> assembler) {
-        return assembler.toModel(articleRepository.findAll(pageable), new ArticleModelAssembler());
+        return assembler.toModel(articleRepository.findAll(pageable), new ArticleModelAssembler(authorClient));
     }
 
     @GetMapping("/{id}")
     public ArticleModel getArticle(@PathVariable("id") Long id) {
-        return new ArticleModelAssembler().toModel(articleRepository.findById(id).get());
+        return new ArticleModelAssembler(authorClient).toModel(articleRepository.findById(id).get());
     }
 }
