@@ -1,2 +1,13 @@
 server:
   port: 8082
+feign:
+  client:
+    config:
+      user-service:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+        url: http://localhost:8081
+logging:
+  level:
+    kr.pe.jonghak.example.bbs.client: debug
