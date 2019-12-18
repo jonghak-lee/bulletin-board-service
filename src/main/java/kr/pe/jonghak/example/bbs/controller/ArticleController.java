@@ -5,9 +5,13 @@ import kr.pe.jonghak.example.bbs.model.ArticleModel;
 import kr.pe.jonghak.example.bbs.model.ArticleModelAssembler;
 import kr.pe.jonghak.example.bbs.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/articles")
@@ -17,8 +21,8 @@ public class ArticleController {
     private ArticleRepository articleRepository;
 
     @GetMapping
-    public Page<Article> getArticles(Pageable pageable) {
-        return articleRepository.findAll(pageable);
+    public PagedModel<ArticleModel> getArticles(Pageable pageable, PagedResourcesAssembler<Article> assembler) {
+        return assembler.toModel(articleRepository.findAll(pageable), new ArticleModelAssembler());
     }
 
     @GetMapping("/{id}")
