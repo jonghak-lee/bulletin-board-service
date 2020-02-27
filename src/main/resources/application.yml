@@ -11,3 +11,6 @@ feign:
 logging:
   level:
     kr.pe.jonghak.example.bbs.client: debug
+spring:
+  session:
+    store-type: redis
